@@ -92,11 +92,11 @@ bool Vector2<T>::operator==(const Vector2<T> v)
 // -----------
 
 template <typename T>
-float Vector2<T>::heading(bool isDegrees)
+float Vector2<T>::heading(bool degrees)
 {
     float angle = atan2(this->y, this->x);
 
-    if (isDegrees)
+    if (degrees)
     {
         angle *= 180.0 / PI;
     }
@@ -104,10 +104,10 @@ float Vector2<T>::heading(bool isDegrees)
 }
 
 template <typename T>
-void Vector2<T>::rotate(float angle, bool isDegrees)
+void Vector2<T>::rotate(float angle, bool degrees)
 {
 
-    if (isDegrees)
+    if (degrees)
     {
         angle /= 180.0 / PI;
     }

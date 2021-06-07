@@ -19,15 +19,15 @@ public:
         end = i_end;
     }
 
-    measure_t heading()
+    measure_t heading(bool degrees=false)
     {
-        return (end - start).heading();
+        return (end - start).heading(degrees);
     }
 
-    void rotate(measure_t angle, bool isDegrees=false)
+    void rotate(measure_t angle, bool degrees=false)
     {
         DefaultVector2 delta = end - start;
-        delta.rotate(angle, isDegrees);
+        delta.rotate(angle, degrees);
         end = start + delta;
     }
 

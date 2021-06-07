@@ -12,7 +12,6 @@
 void cleanUpCurses()
 {
     echo();
-    nocbreak();
     endwin();
 }
 
@@ -22,7 +21,6 @@ int main()
 
     initscr();
     noecho();
-    cbreak();
     WINDOW* window = newwin(0, 0, 0, 0);
     keypad(window, true);
 
@@ -32,15 +30,20 @@ int main()
 
     measure_t angle = 0;
     measure_t turnSpeed = 5;
+    measure_t speed = 0.1;
+    DefaultVector2 position(0, 0);
 
-    render(window, walls, DefaultVector2(0, 0), angle, 90, 20);
+    render(window, walls, position, angle, 90, 20);
     for (int i = 0; i < 100000; i ++)
     {
         wrefresh(window);
-        char key = wgetch(window);;
-        if (key == 4) angle -= turnSpeed;
-        else if (key == 5) angle += turnSpeed;
-        render(window, walls, DefaultVector2(0, 0), angle, 90, 20);
+        char key = wgetch(window);
+        waddstr(window, std::to_string(key).c_str());
+        if (key == 97) angle -= turnSpeed; // a
+        else if (key == 100) angle += turnSpeed; // d
+        else if (key == 4) position.x -= speed; // left
+        else if (key == 5) position.x += speed; // right
+        render(window, walls, position, angle, 90, 20);
     }
     
     return 0;

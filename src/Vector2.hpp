@@ -47,7 +47,7 @@ public:
 
     float heading(bool degrees=false);
     
-    void rotate(float angle, bool isDegrees=false);
+    void rotate(float angle, bool degrees=false);
 
     T magSq();
     T mag();
