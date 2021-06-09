@@ -11,7 +11,7 @@ std::vector<Ray> createRays(int rayAmount, DefaultVector2 cameraPosition,
     measure_t crntAngle = cameraAngle - fieldOfView / 2;
     for (int i = 0; i < rayAmount; i ++)
     {
-        DefaultVector2 endPosition(rayLength, 0);
+        DefaultVector2 endPosition(0, rayLength);
         endPosition.rotate(crntAngle, true);
         endPosition += cameraPosition;
         rays.push_back(Wall(cameraPosition, endPosition));
@@ -35,7 +35,7 @@ std::vector<Intersection> calculateIntersections(std::vector<Wall>& walls,
         Wall* closestWall;
         for (auto wall : walls)
         {
-            auto intersection = ray.intersection(wall);
+            auto intersection = wall.intersection(ray);
             if (! intersection) continue; // If there is no intersection then skip
                 measure_t dist = ray.start.dist(*intersection);
                 if (dist < closestIntersectionDist)
@@ -78,7 +78,8 @@ void render(WINDOW* window, std::vector<Wall>& walls,
         std::string data = std::to_string(columnHeight);
         for (int row = 0; row < columnHeight; row ++)
         {
-            wmove(window, rows / 2 - row / 2, intersection.rayNumber);
+            wmove(window, rows / 2 - columnHeight / 2 + row,
+                intersection.rayNumber);
             waddch(window, '#');
         }
     }

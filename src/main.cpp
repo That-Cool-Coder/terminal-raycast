@@ -38,11 +38,21 @@ int main()
     {
         wrefresh(window);
         char key = wgetch(window);
-        waddstr(window, std::to_string(key).c_str());
-        if (key == 97) angle -= turnSpeed; // a
-        else if (key == 100) angle += turnSpeed; // d
-        else if (key == 4) position.x -= speed; // left
-        else if (key == 5) position.x += speed; // right
+
+        if (key == 'q') break;
+
+        if (key == 4) angle -= turnSpeed; // left arrow
+        if (key == 5) angle += turnSpeed; // right arrow
+
+        DefaultVector2 movement;
+        if (key == 'j') movement.x += speed;
+        if (key == 'l') movement.x -= speed;
+        if (key == 'i') movement.y += speed;
+        if (key == 'k') movement.y -= speed;
+
+        movement.rotate(angle, true);
+        position += movement;
+
         render(window, walls, position, angle, 90, 20);
     }
     
