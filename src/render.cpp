@@ -1,5 +1,9 @@
 #include "render.hpp"
 
+const std::string darkToLightAscii =
+    "@#8f|+";
+    //"$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ";
+
 // Look at the bottom of this file for the main rendering function
 
 std::vector<Ray> createRays(int rayAmount, DefaultVector2 cameraPosition,
@@ -69,37 +73,20 @@ void render(WINDOW* window, std::vector<Wall>& walls,
     std::vector<Intersection> intersections = calculateIntersections(walls, rays);
 
     wclear(window);
-
-    ///*
     measure_t verticalFieldOfView = rows / cols * fieldOfView;
     for (auto intersection : intersections)
     {
         int columnHeight = rows / intersection.distance;
-        std::string data = std::to_string(columnHeight);
+        measure_t darkness = intersection.distance / viewDistance;
+        int characterIndex = (int) (darkness * darkToLightAscii.length());
+        char fillCharacter = darkToLightAscii[characterIndex];
         for (int row = 0; row < columnHeight; row ++)
         {
             wmove(window, rows / 2 - columnHeight / 2 + row,
                 intersection.rayNumber);
-            waddch(window, '#');
+            waddch(window, fillCharacter);
         }
     }
-    //*/
-
-    /*
-    int j = 0;
-    for (auto ray : rays)
-    {
-        std::string data = std::to_string(ray.heading(true));
-        int i = 0;
-        for (auto c : data)
-        {
-            wmove(window, i, j);
-            waddch(window, c);
-            i ++;
-        }
-        j ++;
-    }
-    */
 
     wrefresh(window);
 }

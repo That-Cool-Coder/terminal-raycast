@@ -33,7 +33,7 @@ int main()
     measure_t speed = 0.1;
     DefaultVector2 position(0, 0);
 
-    render(window, walls, position, angle, 90, 20);
+    render(window, walls, position, angle, 90, 10);
     for (int i = 0; i < 100000; i ++)
     {
         wrefresh(window);
@@ -53,7 +53,7 @@ int main()
         movement.rotate(angle, true);
         position += movement;
 
-        render(window, walls, position, angle, 90, 20);
+        render(window, walls, position, angle, 90, 10);
     }
     
     return 0;
