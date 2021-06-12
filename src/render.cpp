@@ -1,10 +1,10 @@
 #include "render.hpp"
 
+// Look at the bottom of this file for the main rendering function
+
 const std::string darkToLightAscii =
     "@#8f|+";
     //"$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ";
-
-// Look at the bottom of this file for the main rendering function
 
 std::vector<Ray> createRays(int rayAmount, DefaultVector2 cameraPosition,
     measure_t cameraAngle, measure_t fieldOfView, measure_t rayLength)

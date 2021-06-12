@@ -34,9 +34,10 @@ int main()
     DefaultVector2 position(0, 0);
 
     render(window, walls, position, angle, 90, 10);
-    for (int i = 0; i < 100000; i ++)
+    while (true)
     {
         wrefresh(window);
+
         char key = wgetch(window);
 
         if (key == 'q') break;
