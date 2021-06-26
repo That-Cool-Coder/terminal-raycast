@@ -72,7 +72,7 @@ void render(WINDOW* window, std::vector<Wall>& walls,
         fieldOfView, viewDistance);
     std::vector<Intersection> intersections = calculateIntersections(walls, rays);
 
-    wclear(window);
+    werase(window);
     measure_t verticalFieldOfView = rows / cols * fieldOfView;
     for (auto intersection : intersections)
     {

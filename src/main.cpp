@@ -6,8 +6,12 @@
 #include "crossPlatformCurses.hpp"
 
 #include "Vector2.hpp"
+#include "KeyChecker.hpp"
 #include "structs.hpp"
+#include "misc.hpp"
 #include "render.hpp"
+
+#define FRAME_RATE 100
 
 void cleanUpCurses()
 {
@@ -33,28 +37,29 @@ int main()
     measure_t speed = 0.1;
     DefaultVector2 position(0, 0);
 
+    KeyChecker keyChecker(window);
+    keyChecker.start();
+
     render(window, walls, position, angle, 90, 10);
     while (true)
     {
-        wrefresh(window);
+        if (keyChecker.keyIsDown('q')) break;
 
-        char key = wgetch(window);
-
-        if (key == 'q') break;
-
-        if (key == 4) angle -= turnSpeed; // left arrow
-        if (key == 5) angle += turnSpeed; // right arrow
+        if (keyChecker.keyIsDown(LEFT_ARROW)) angle -= turnSpeed; // left arrow
+        if (keyChecker.keyIsDown(RIGHT_ARROW)) angle += turnSpeed; // right arrow
 
         DefaultVector2 movement;
-        if (key == 'j') movement.x += speed;
-        if (key == 'l') movement.x -= speed;
-        if (key == 'i') movement.y += speed;
-        if (key == 'k') movement.y -= speed;
+        if (keyChecker.keyIsDown('j')) movement.x += speed;
+        if (keyChecker.keyIsDown('l')) movement.x -= speed;
+        if (keyChecker.keyIsDown('i')) movement.y += speed;
+        if (keyChecker.keyIsDown('k')) movement.y -= speed;
+        keyChecker.clearInputBuffer();
 
         movement.rotate(angle, true);
         position += movement;
 
         render(window, walls, position, angle, 90, 10);
+        SLEEP(FRAME_RATE);
     }
     
     return 0;
